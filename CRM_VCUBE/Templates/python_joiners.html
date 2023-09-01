@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <form action="" method="post">
+            {% csrf_token %}
+            <h1>python joiners</h1>
+            fullname <input type="text" name="fullname"><br><br>
+            username <input type="text" name="username"><br><br>
+            password <input type="password" name="password"><br><br>
+            email_id <input type="text" name="email_id"><br><br>
+            phone_no <input type="text" name="phone_no"><br><br>
+            <label for="intrest">course</label>
+            <select name="intrest" id="intrest">
+            <option value="python">python</option>
+            </select><br><br>
+            <input type="submit">
+        </form>
+    </center>
+    
+</body>
+</html>

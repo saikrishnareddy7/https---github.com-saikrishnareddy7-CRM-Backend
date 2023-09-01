@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <form action="{% url 'enrollform' %}" method="post">
+            {% csrf_token %}
+            <h1>vcube</h1>
+            <h3>enroll form</h3>
+            {{form.as_p}}
+            <label for="intrest">course</label>
+            <select name="intrest" id="intrest">
+            <option value="python">python</option>
+            <option value="java">java</option>
+            <option value="testing">testing</option>
+            </select><br><br>
+            <input type="submit"><br><br>
+            <hr>
+            <a href="{% url 'homepageform' %}">back to  home</a>
+        </form>
+
+        {% for msg in messages %}
+        <h3>{{msg}}</h3>
+        {% endfor %}
+    </center>
+    
+</body>
+</html>

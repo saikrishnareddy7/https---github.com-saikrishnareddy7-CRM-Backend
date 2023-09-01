@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+    <form action="{% url 'python_enrolled' %}">
+        <h2>PYTHON ENROLLED STUDENTS</h2>
+        {% csrf_token %}
+<table border="1px">
+    <tr>
+        <th>first_name</th>  <th>last_name</th>  
+        <th>Email_id</th>  <th>mobile_no  </th> 
+         <th>course</th>  <th>next_step</th>
+
+    </tr>
+    {% for obj in p_student %}
+    <tr>
+        <td>{{obj.first_name}}</td>  <td>{{obj.last_name}}</td> 
+         <td>{{obj.email_id}}</td>  <td>{{obj.phone_no}}</td>  
+         <td>{{obj.course}}</td>    <td><a href="{% url 'python_joiners' %}">join</a></td>
+    </tr>
+
+    {% endfor %}
+    
+
+</table>
+</form>
+</center>
+</body>
+</html>
