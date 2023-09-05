@@ -14,21 +14,24 @@
     <tr>
         <th>first_name</th>  <th>last_name</th>  
         <th>Email_id</th>  <th>mobile_no  </th> 
-         <th>course</th>  <th>next_step</th>
+         <th>course</th> 
 
     </tr>
     {% for obj in p_student %}
     <tr>
         <td>{{obj.first_name}}</td>  <td>{{obj.last_name}}</td> 
          <td>{{obj.email_id}}</td>  <td>{{obj.phone_no}}</td>  
-         <td>{{obj.course}}</td>    <td><a href="{% url 'python_joiners' %}">join</a></td>
+         <td>{{obj.course}}</td>   
+        
     </tr>
 
     {% endfor %}
-    
+    <br><br>
 
 </table>
 </form>
+
+<a href="{% url 'python_joiners' %}">join a student</a>
 </center>
 </body>
 </html>
