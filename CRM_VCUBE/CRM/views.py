@@ -16,10 +16,22 @@ def home(request):
 
         
     return render(request,'homepage.html')
-@login_required(login_url='adminlogin')
-def studentpage(request):
 
-    return render(request,'studentpage.html')
+
+def studentpage(request):
+    if request.method == 'POST':
+        user=request.POST['username']
+        password=request.POST['pasword']
+
+        valid_user = authenticate(request,username=user,password=password)
+
+        if valid_user != None:
+            
+            return render(request,'studentpage.html')
+
+
+
+    return render(request,'studentlogin.html')
 
 
 def enroll(request):
@@ -127,13 +139,14 @@ def adminlogin(request):
 
             if request.user.is_superuser:
                 
-                return render(request,'admins.html')
-            
-            
-            else:
-                
                 return render(request,'studentpage.html')
             
+            
+            if request.user.is_active:
+                
+                return render(request,'admins.html')
+            
+           
            
         else:
             messages.error(request,'INVALID CREDENTIALS')
