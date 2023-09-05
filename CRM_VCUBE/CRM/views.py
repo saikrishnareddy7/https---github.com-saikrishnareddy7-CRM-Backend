@@ -7,7 +7,6 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
 def home(request):
     
     '''if request.method == 'POST':'''
