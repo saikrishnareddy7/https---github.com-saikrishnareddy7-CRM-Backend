@@ -137,15 +137,9 @@ def adminlogin(request):
             #recipient_list=[e_mail]
             #send_mail(subject,message,from_email,recipient_list)
 
-            if request.user.is_superuser:
+            
                 
-                return render(request,'studentpage.html')
-            
-            
-            if request.user.is_active:
-                
-                return render(request,'admins.html')
-            
+            return render(request,'studentpage.html')
            
            
         else:

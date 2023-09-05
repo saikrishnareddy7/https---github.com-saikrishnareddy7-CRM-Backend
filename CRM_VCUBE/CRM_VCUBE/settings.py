@@ -135,3 +135,9 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'badamkittu125@gmail.com'
 EMAIL_HOST_PASSWORD = 'tkqwuyzorvexyzvs'
+
+
+LOGIN_REDIRECT_URL = 'adminlogin'
+
+LOGIN_URL = 'adminlogin'
+
