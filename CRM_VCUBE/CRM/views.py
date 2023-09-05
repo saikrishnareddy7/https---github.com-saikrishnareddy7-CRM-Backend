@@ -19,17 +19,7 @@ def home(request):
 
 
 def studentpage(request):
-    if request.method == 'POST':
-        user=request.POST['username']
-        password=request.POST['password']
 
-        valid_user = authenticate(request,username=user,password=password)
-
-        if valid_user != None:
-
-            return render(request,'studentpage.html')
-        else:
-            return render(request,'studentlogin.html')
 
     return render(request,'studentlogin.html')
 
