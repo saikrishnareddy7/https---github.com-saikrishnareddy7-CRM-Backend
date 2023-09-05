@@ -13,12 +13,6 @@ class Student(models.Model):
     def __str__(self) :
         return self.first_name
     
-def presignal (sender,instance,*args,**kwargs):
-    print('signal recived')
-    print(sender)
-    print(instance.first_name,instance.last_name,instance.phone_no,instance.course)
-
-pre_save.connect(presignal,Student) 
 
 
 class Python(models.Model):
@@ -59,12 +53,22 @@ class python_joiners(models.Model):
     names=models.CharField(max_length=30)
     username=models.CharField(max_length=20)
     password= models.CharField(max_length=15)
-    email_id=models.EmailField(max_length=20)
+    email_id=models.EmailField(max_length=30)
     phone_no=models.CharField(max_length=10)
     course=models.CharField(max_length=15)
-
+class p_details(models.Model):
+    mock=models.OneToOneField(python_joiners,on_delete=models.CASCADE)
+    weekly_test=models.IntegerField()
     def __str__(self) :
-        return self.name
+        return self.names
+    
+def presignal (sender,instance,*args,**kwargs):
+    print('signal recived')
+    print(sender)
+    print(instance.names,instance.username,instance.password,instance.course)
+
+pre_save.connect(presignal,python_joiners) 
+
 
 class java_joiners(models.Model):
 

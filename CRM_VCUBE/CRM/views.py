@@ -3,8 +3,11 @@ from django.http import HttpResponse,HttpRequest
 from. models import Student,Python,Java,Testing,python_joiners
 from django.contrib import messages
 from .forms import Enrollform
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate,logout
+from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.conf import settings
 
 # Create your views here.
 def home(request):
@@ -13,6 +16,10 @@ def home(request):
 
         
     return render(request,'homepage.html')
+@login_required(login_url='adminlogin')
+def studentpage(request):
+
+    return render(request,'studentpage.html')
 
 
 def enroll(request):
@@ -68,11 +75,33 @@ def python_joiner(request):
         p_word=request.POST['password']
         email=request.POST['email_id']
         phone_no=int(request.POST['phone_no'])
-        subject=request.POST['intrest']
+        sub=request.POST['intrest']
+
+        #user_check = authenticate(request,username=u_name,password=p_word,email_id=email,phone_no=phone_no)
+
+        if not python_joiners.objects.filter(email_id=email,phone_no=phone_no).exists():
+
+            if  python_joiners.objects.filter(username=u_name).exists():
+                messages.success(request,'*{}* username already exist please add any other else'.format(u_name))
+            
+            else:
+                subject ='you are joined in vcube'
+                message ='hi {f_name} iam sample mail  its student registration'
+                from_email=settings.EMAIL_HOST_USER
+                recipient_list=[email]
+                send_mail(subject,message,from_email,recipient_list)
+
+                python_joiners.objects.create(names=f_name,username=u_name,password=p_word,email_id=email,phone_no=phone_no,course=sub)
+                messages.success(request,'{} joined in vcube'.format(f_name))
+
+                user = User.objects.create_user(username=u_name,email=email,password=p_word)
+                user.save()
 
 
-        python_joiners.objects.create(names=f_name,username=u_name,password=p_word,email_id=email,phone_no=phone_no,course=subject)
-        return render(request,'python_joiners.html')
+                return render(request,'python_joiners.html')
+        else:
+            messages.success(request,'{} already joined in vcube'.format(f_name))
+
 
     return render(request,'python_joiners.html')
 
@@ -81,14 +110,31 @@ def adminlogin(request):
 
     if request.method == 'POST':
 
+        e_mail=request.POST['mail']
         uname=request.POST['uname']
         pswd=request.POST['pwd']
 
         valid_user = authenticate(request,username=uname,password=pswd)
 
         if valid_user != None:
+            
 
-            return redirect('adminpage')
+            #subject ='you are loged in to vcube'
+            #message ='hi {uname} iam sample mail  its admin login'
+            #from_email=settings.EMAIL_HOST_USER
+            #recipient_list=[e_mail]
+            #send_mail(subject,message,from_email,recipient_list)
+
+            if request.user.is_superuser:
+                
+                return render(request,'admins.html')
+            
+            
+            else:
+                
+                return render(request,'studentpage.html')
+            
+           
         else:
             messages.error(request,'INVALID CREDENTIALS')
             messages.error(request,'PLEASE CHECK THE CREDENTIALS')
@@ -101,6 +147,10 @@ def adminlogin(request):
 def admins(request):
 
     return render(request,'admins.html')
+
+def logout(request):
+    logout(request)
+    return redirect('adminlogin')
 
 def select (request):
     

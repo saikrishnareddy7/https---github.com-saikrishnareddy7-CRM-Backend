@@ -21,6 +21,10 @@
             </select><br><br>
             <input type="submit">
         </form>
+        <br><br>
+        {% for msg in messages %}
+        {{ msg }}
+        {% endfor %}
     </center>
     
 </body>
